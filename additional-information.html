@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Additional Information</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Additional Information</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="personal-details.html">Personal Details</a></li>
+                    <li><a href="job-description.html">Job Description</a></li>
+                    <li><a href="requirements.html">Requirements</a></li>
+                    <li><a href="declaration.html">Declaration</a></li>
+                    <li><a href="visa-application.html">Visa Application</a></li>
+                    <li><a href="missing-documents.html">Missing Documents</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <section id="additionalInfo">
+                <h2>Additional Information</h2>
+                <p>If you are required to appear in person to work, you will be guided on how your plane ticket will be processed within 10 business days at most.</p>
+                <p>If you will be working from home online, you will be required to work on scheduled hours.</p>
+                <button id="agreeButton">I Agree and Confirm</button>
+            </section>
+            <section id="applicationFee" style="display: none;">
+                <h2>Application Fee</h2>
+                <p>Please select a payment method to pay the application fee:</p>
+                <form id="paymentForm">
+                    <label for="paymentMethod">Payment Method:</label>
+                    <select id="paymentMethod" required>
+                        <option value="" disabled selected>Select Payment Method</option>
+                        <option value="binance">Binance</option>
+                        <option value="mpesa">M-Pesa</option>
+                    </select>
+                    <div id="mpesaDetails" style="display: none;">
+                        <p>Pay to M-Pesa Number: <strong id="mpesaNumber">0703606219</strong></p>
+                        <button type="button" id="copyMpesaNumber">Copy M-Pesa Number</button>
+                    </div>
+                    <div id="binanceDetails" style="display: none;">
+                        <p>Pay to Binance Wallet Address: <strong id="binanceAddress">1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa</strong></p>
+                        <button type="button" id="copyBinanceAddress">Copy Binance Wallet Address</button>
+                    </div>
+                    <button type="submit">Pay</button>
+                </form>
+            </section>
+        </main>
+        <footer>
+            <p>&copy; 2025 Job Application Platform. All rights reserved.</p>
+        </footer>
+    </div>
+    <script>
+        document.getElementById('agreeButton').addEventListener('click', function() {
+            alert('You have agreed and confirmed the additional information.');
+            document.getElementById('applicationFee').style.display = 'block';
+        });
+
+        document.getElementById('paymentMethod').addEventListener('change', function() {
+            const paymentMethod = document.getElementById('paymentMethod').value;
+            if (paymentMethod === 'mpesa') {
+                document.getElementById('mpesaDetails').style.display = 'block';
+                document.getElementById('binanceDetails').style.display = 'none';
+            } else if (paymentMethod === 'binance') {
+                document.getElementById('mpesaDetails').style.display = 'none';
+                document.getElementById('binanceDetails').style.display = 'block';
+            } else {
+                document.getElementById('mpesaDetails').style.display = 'none';
+                document.getElementById('binanceDetails').style.display = 'none';
+            }
+        });
+
+        document.getElementById('copyMpesaNumber').addEventListener('click', function() {
+            const mpesaNumber = document.getElementById('mpesaNumber').textContent;
+            navigator.clipboard.writeText(mpesaNumber).then(() => {
+                alert('M-Pesa number copied to clipboard!');
+            });
+        });
+
+        document.getElementById('copyBinanceAddress').addEventListener('click', function() {
+            const binanceAddress = document.getElementById('binanceAddress').textContent;
+            navigator.clipboard.writeText(binanceAddress).then(() => {
+                alert('Binance wallet address copied to clipboard!');
+            });
+        });
+
+        document.getElementById('paymentForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const paymentMethod = document.getElementById('paymentMethod').value;
+            alert('Click pay if the transaction has been received successfully.');
+            alert(`Payment successful using ${paymentMethod}! Deposit received, wait for approval.`);
+            // Handle payment processing logic here
+            window.location.href = 'visa-application.html';
+        });
+    </script>
+</body>
+</html>

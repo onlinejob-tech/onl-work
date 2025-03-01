@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Declaration</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Declaration</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="personal-details.html">Personal Details</a></li>
+                    <li><a href="job-description.html">Job Description</a></li>
+                    <li><a href="requirements.html">Requirements</a></li>
+                    <li><a href="visa-application.html">Visa Application</a></li>
+                    <li><a href="missing-documents.html">Missing Documents</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <section id="declaration">
+                <h2>Declaration of Readiness to Work Abroad</h2>
+                <form id="declarationForm">
+                    <label for="applicantName">Full Name:</label>
+                    <input type="text" id="applicantName" placeholder="Full Name" required>
+                    <p>I, <span id="displayApplicantName"></span>, declare that I am ready to work abroad and accept the terms and conditions.</p>
+                    <button type="submit">Accept and Declare</button>
+                </form>
+            </section>
+            <section id="applicationFee" style="display: none;">
+                <h2>Application Fee</h2>
+                <p>Please select a payment method to pay the application fee:</p>
+                <form id="paymentForm">
+                    <label for="paymentMethod">Payment Method:</label>
+                    <select id="paymentMethod" required>
+                        <option value="" disabled selected>Select Payment Method</option>
+                        <option value="binance">Binance</option>
+                        <option value="mpesa">M-Pesa</option>
+                    </select>
+                    <div id="mpesaDetails" style="display: none;">
+                        <p>Pay to M-Pesa Number: <strong id="mpesaNumber">0703606219</strong></p>
+                        <button type="button" id="copyMpesaNumber">Copy M-Pesa Number</button>
+                    </div>
+                    <div id="binanceDetails" style="display: none;">
+                        <p>Pay to Binance Wallet Address: <strong id="binanceAddress">1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa</strong></p>
+                        <button type="button" id="copyBinanceAddress">Copy Binance Wallet Address</button>
+                    </div>
+                    <button type="submit">Pay</button>
+                </form>
+            </section>
+        </main>
+        <footer>
+            <p>&copy; 2025 Job Application Platform. All rights reserved.</p>
+        </footer>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const applicantName = urlParams.get('name');
+            document.getElementById('applicantName').value = applicantName;
+            document.getElementById('displayApplicantName').textContent = applicantName;
+
+            document.getElementById('applicantName').addEventListener('input', function() {
+                document.getElementById('displayApplicantName').textContent = this.value;
+            });
+
+            document.getElementById('declarationForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+                alert('Declaration accepted! You are now ready to work abroad.');
+                document.getElementById('applicationFee').style.display = 'block';
+                window.location.href = `additional-information.html?name=${encodeURIComponent(document.getElementById('applicantName').value)}`;
+            });
+
+            document.getElementById('paymentMethod').addEventListener('change', function() {
+                const paymentMethod = document.getElementById('paymentMethod').value;
+                if (paymentMethod === 'mpesa') {
+                    document.getElementById('mpesaDetails').style.display = 'block';
+                    document.getElementById('binanceDetails').style.display = 'none';
+                } else if (paymentMethod === 'binance') {
+                    document.getElementById('mpesaDetails').style.display = 'none';
+                    document.getElementById('binanceDetails').style.display = 'block';
+                } else {
+                    document.getElementById('mpesaDetails').style.display = 'none';
+                    document.getElementById('binanceDetails').style.display = 'none';
+                }
+            });
+
+            document.getElementById('copyMpesaNumber').addEventListener('click', function() {
+                const mpesaNumber = document.getElementById('mpesaNumber').textContent;
+                navigator.clipboard.writeText(mpesaNumber).then(() => {
+                    alert('M-Pesa number copied to clipboard!');
+                });
+            });
+
+            document.getElementById('copyBinanceAddress').addEventListener('click', function() {
+                const binanceAddress = document.getElementById('binanceAddress').textContent;
+                navigator.clipboard.writeText(binanceAddress).then(() => {
+                    alert('Binance wallet address copied to clipboard!');
+                });
+            });
+
+            document.getElementById('paymentForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const paymentMethod = document.getElementById('paymentMethod').value;
+                alert('Click pay if the transaction has been received successfully.');
+                alert(`Payment successful using ${paymentMethod}! Deposit received, wait for approval.`);
+                // Handle payment processing logic here
+                window.location.href = `additional-information.html?name=${encodeURIComponent(document.getElementById('applicantName').value)}`;
+            });
+        });
+    </script>
+</body>
+</html>

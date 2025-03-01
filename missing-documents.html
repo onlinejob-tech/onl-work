@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Missing Documents</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Missing Documents</h1>
+        </header>
+        <main>
+            <section id="missingDocuments">
+                <h2>Apply for Missing Documents</h2>
+                <form id="missingDocumentsForm">
+                    <label for="fullName">Full Name:</label>
+                    <input type="text" id="fullName" placeholder="Full Name" required>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" placeholder="Email" required>
+                    <label for="phoneNumber">Phone Number:</label>
+                    <input type="tel" id="phoneNumber" placeholder="Phone Number" required>
+                    <label for="documentType">Document Type:</label>
+                    <select id="documentType" required>
+                        <option value="" disabled selected>Select Document Type</option>
+                        <option value="passport">Passport</option>
+                        <option value="visa">Visa</option>
+                    </select>
+                    <label for="documentUpload">Upload Document:</label>
+                    <input type="file" id="documentUpload" required>
+                    <button type="submit">Apply</button>
+                </form>
+                <section id="documentDetails">
+                    <h2>Document Requirements</h2>
+                    <p>To apply for a passport, you need the following:</p>
+                    <ul>
+                        <li>Birth Certificate</li>
+                        <li>National ID</li>
+                        <li>Passport Photos</li>
+                    </ul>
+                    <p>To apply for a visa, you need the following:</p>
+                    <ul>
+                        <li>Valid Passport</li>
+                        <li>Visa Application Form</li>
+                        <li>Passport Photos</li>
+                    </ul>
+                </section>
+                <section id="visaApplication" style="display: none;">
+                    <h2>Visa Application</h2>
+                    <p>Please fill out the <a href="visa-application.html">Visa Application Form</a>.</p>
+                </section>
+                <section id="passportPhoto" style="display: none;">
+                    <h2>Take Passport Photo</h2>
+                    <video id="video" width="320" height="240" autoplay></video>
+                    <button id="snap">Snap Photo</button>
+                    <canvas id="canvas" width="320" height="240"></canvas>
+                </section>
+                <section id="processingFee" style="display: none;">
+                    <h2>Document Processing Fee</h2>
+                    <p>Please select a payment method to pay the processing fee:</p>
+                    <form id="paymentForm">
+                        <label for="paymentMethod">Payment Method:</label>
+                        <select id="paymentMethod" required>
+                            <option value="" disabled selected>Select Payment Method</option>
+                            <option value="binance">Binance</option>
+                            <option value="mpesa">M-Pesa</option>
+                        </select>
+                        <div id="mpesaDetails" style="display: none;">
+                            <p>Pay to M-Pesa Number: <strong id="mpesaNumber">0703606219</strong></p>
+                            <button type="button" id="copyMpesaNumber">Copy M-Pesa Number</button>
+                        </div>
+                        <div id="binanceDetails" style="display: none;">
+                            <p>Pay to Binance Wallet Address: <strong id="binanceAddress">1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa</strong></p>
+                            <button type="button" id="copyBinanceAddress">Copy Binance Wallet Address</button>
+                        </div>
+                        <button type="submit">Pay</button>
+                    </form>
+                </section>
+                <section id="visaInfo">
+                    <h2>Important Information</h2>
+                    <p>If you do not have a visa, please apply for it by clicking the button below:</p>
+                    <button id="applyVisaButton">Apply for Visa</button>
+                </section>
+            </section>
+        </main>
+        <footer>
+            <p>&copy; 2025 Job Application Platform. All rights reserved.</p>
+        </footer>
+    </div>
+    <script>
+        document.getElementById('documentType').addEventListener('change', function() {
+            const documentType = document.getElementById('documentType').value;
+            if (documentType === 'passport') {
+                document.getElementById('passportPhoto').style.display = 'block';
+            } else {
+                document.getElementById('passportPhoto').style.display = 'none';
+            }
+            if (documentType === 'visa') {
+                document.getElementById('visaApplication').style.display = 'block';
+            } else {
+                document.getElementById('visaApplication').style.display = 'none';
+            }
+        });
+
+        document.getElementById('missingDocumentsForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            const documentType = document.getElementById('documentType').value;
+            const documentUpload = document.getElementById('documentUpload').files[0];
+
+            if (documentUpload) {
+                alert(`Application for ${documentType} submitted successfully!`);
+                document.getElementById('processingFee').style.display = 'block';
+            } else {
+                alert('Please upload the required document.');
+            }
+        });
+
+        document.getElementById('paymentMethod').addEventListener('change', function() {
+            const paymentMethod = document.getElementById('paymentMethod').value;
+            if (paymentMethod === 'mpesa') {
+                document.getElementById('mpesaDetails').style.display = 'block';
+                document.getElementById('binanceDetails').style.display = 'none';
+            } else if (paymentMethod === 'binance') {
+                document.getElementById('mpesaDetails').style.display = 'none';
+                document.getElementById('binanceDetails').style.display = 'block';
+            } else {
+                document.getElementById('mpesaDetails').style.display = 'none';
+                document.getElementById('binanceDetails').style.display = 'none';
+            }
+        });
+
+        document.getElementById('copyMpesaNumber').addEventListener('click', function() {
+            const mpesaNumber = document.getElementById('mpesaNumber').textContent;
+            navigator.clipboard.writeText(mpesaNumber).then(() => {
+                alert('M-Pesa number copied to clipboard!');
+            });
+        });
+
+        document.getElementById('copyBinanceAddress').addEventListener('click', function() {
+            const binanceAddress = document.getElementById('binanceAddress').textContent;
+            navigator.clipboard.writeText(binanceAddress).then(() => {
+                alert('Binance wallet address copied to clipboard!');
+            });
+        });
+
+        document.getElementById('paymentForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const paymentMethod = document.getElementById('paymentMethod').value;
+            alert('Click pay if the transaction has been received successfully.');
+            alert(`Payment successful using ${paymentMethod}! Your documents will be processed shortly.`);
+            // Handle payment processing logic here
+        });
+
+        document.getElementById('applyVisaButton').addEventListener('click', function() {
+            window.location.href = 'visa-application.html';
+        });
+
+        // Camera capture functionality
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const snap = document.getElementById('snap');
+        const context = canvas.getContext('2d');
+        let stream;
+
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(s => {
+                stream = s;
+                video.srcObject = stream;
+            })
+            .catch(err => {
+                console.error('Error accessing the camera: ', err);
+            });
+
+        snap.addEventListener('click', function() {
+            context.drawImage(video, 0, 0, 320, 240);
+            const dataURL = canvas.toDataURL('image/png');
+            console.log('Captured photo:', dataURL);
+            alert('Photo captured successfully!');
+            // Stop the camera stream
+            stream.getTracks().forEach(track => track.stop());
+        });
+    </script>
+</body>
+</html>

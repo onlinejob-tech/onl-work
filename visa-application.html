@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visa Application</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Visa Application Form</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="personal-details.html">Personal Details</a></li>
+                    <li><a href="job-description.html">Job Description</a></li>
+                    <li><a href="requirements.html">Requirements</a></li>
+                    <li><a href="declaration.html">Declaration</a></li>
+                    <li><a href="missing-documents.html">Missing Documents</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <section id="visaApplicationForm">
+                <h2>Fill out the Visa Application Form</h2>
+                <form id="visaForm">
+                    <label for="fullName">Full Name:</label>
+                    <input type="text" id="fullName" placeholder="Full Name" required>
+                    <label for="passportNumber">Passport Number:</label>
+                    <input type="text" id="passportNumber" placeholder="Passport Number" required readonly>
+                    <button type="button" id="generatePassportNumber">Generate Passport Number</button>
+                    <label for="nationality">Nationality:</label>
+                    <input type="text" id="nationality" placeholder="Nationality" required>
+                    <label for="dateOfBirth">Date of Birth:</label>
+                    <input type="date" id="dateOfBirth" required>
+                    <label for="visaType">Visa Type:</label>
+                    <select id="visaType" required>
+                        <option value="" disabled selected>Select Visa Type</option>
+                        <option value="tourist">Tourist Visa</option>
+                        <option value="business">Business Visa</option>
+                        <option value="student">Student Visa</option>
+                    </select>
+                    <label for="travelDates">Travel Dates:</label>
+                    <input type="text" id="travelDates" placeholder="Travel Dates" required>
+                    <label for="purposeOfVisit">Purpose of Visit:</label>
+                    <textarea id="purposeOfVisit" placeholder="Purpose of Visit" required></textarea>
+                    <button type="submit">Submit Application</button>
+                </form>
+                <section id="visaPayment" style="display: none;">
+                    <h2>Visa Application Payment</h2>
+                    <p>The visa application fee is 20 USD for Binance and 1500 KSH for M-Pesa.</p>
+                    <p>Please select a payment method to pay the visa application fee:</p>
+                    <form id="visaPaymentForm">
+                        <label for="visaPaymentMethod">Payment Method:</label>
+                        <select id="visaPaymentMethod" required>
+                            <option value="" disabled selected>Select Payment Method</option>
+                            <option value="binance">Binance (20 USD)</option>
+                            <option value="mpesa">M-Pesa (1500 KSH)</option>
+                        </select>
+                        <div id="mpesaDetails" style="display: none;">
+                            <p>Pay to M-Pesa Number: <strong id="mpesaNumber">0703606219</strong></p>
+                            <button type="button" id="copyMpesaNumber">Copy M-Pesa Number</button>
+                        </div>
+                        <div id="binanceDetails" style="display: none;">
+                            <p>Pay to Binance Wallet Address: <strong id="binanceAddress">1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa</strong></p>
+                            <button type="button" id="copyBinanceAddress">Copy Binance Wallet Address</button>
+                        </div>
+                        <button type="submit">Pay</button>
+                    </form>
+                    <p class="notice">Your visa application will be processed in 5 working days.</p>
+                </section>
+            </section>
+        </main>
+        <footer>
+            <p>&copy; 2025 Job Application Platform. All rights reserved.</p>
+        </footer>
+    </div>
+    <script>
+        document.getElementById('generatePassportNumber').addEventListener('click', function() {
+            const passportNumber = 'P' + Math.floor(Math.random() * 1000000000).toString().padStart(9, '0');
+            document.getElementById('passportNumber').value = passportNumber;
+        });
+
+        document.getElementById('visaForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            alert('Visa application submitted successfully!');
+            document.getElementById('visaPayment').style.display = 'block';
+        });
+
+        document.getElementById('visaPaymentMethod').addEventListener('change', function() {
+            const paymentMethod = document.getElementById('visaPaymentMethod').value;
+            if (paymentMethod === 'mpesa') {
+                document.getElementById('mpesaDetails').style.display = 'block';
+                document.getElementById('binanceDetails').style.display = 'none';
+            } else if (paymentMethod === 'binance') {
+                document.getElementById('mpesaDetails').style.display = 'none';
+                document.getElementById('binanceDetails').style.display = 'block';
+            } else {
+                document.getElementById('mpesaDetails').style.display = 'none';
+                document.getElementById('binanceDetails').style.display = 'none';
+            }
+        });
+
+        document.getElementById('copyMpesaNumber').addEventListener('click', function() {
+            const mpesaNumber = document.getElementById('mpesaNumber').textContent;
+            navigator.clipboard.writeText(mpesaNumber).then(() => {
+                alert('M-Pesa number copied to clipboard!');
+            });
+        });
+
+        document.getElementById('copyBinanceAddress').addEventListener('click', function() {
+            const binanceAddress = document.getElementById('binanceAddress').textContent;
+            navigator.clipboard.writeText(binanceAddress).then(() => {
+                alert('Binance wallet address copied to clipboard!');
+            });
+        });
+
+        document.getElementById('visaPaymentForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const paymentMethod = document.getElementById('visaPaymentMethod').value;
+            alert(`Payment successful using ${paymentMethod}! Your visa application will be processed in 5 working days.`);
+            // Handle payment processing logic here
+            window.location.href = 'missing-documents.html';
+        });
+    </script>
+</body>
+</html>

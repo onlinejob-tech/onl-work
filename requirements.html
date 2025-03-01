@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Requirements</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Job Requirements</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="personal-details.html">Personal Details</a></li>
+                    <li><a href="job-description.html">Job Description</a></li>
+                    <li><a href="declaration.html">Declaration</a></li>
+                    <li><a href="visa-application.html">Visa Application</a></li>
+                    <li><a href="missing-documents.html">Missing Documents</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <section id="requirements">
+                <h2>Do you have the following documents?</h2>
+                <form id="requirementsForm">
+                    <label for="passport">Passport:</label>
+                    <input type="checkbox" id="passport" name="passport" required>
+                    <label for="visa">Visa:</label>
+                    <input type="checkbox" id="visa" name="visa" required>
+                </form>
+                <div id="confirmationButtons">
+                    <button id="yesButton">Yes</button>
+                    <button id="noButton">No</button>
+                </div>
+                <button id="nextButton">Next</button>
+                <button id="backButton">Back</button>
+            </section>
+        </main>
+        <footer>
+            <p>&copy; 2025 Job Application Platform. All rights reserved.</p>
+        </footer>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('yesButton').addEventListener('click', function() {
+                const hasVisa = document.getElementById('visa').checked;
+                if (hasVisa) {
+                    alert('You can proceed to the next step.');
+                } else {
+                    alert('Please apply for a visa first.');
+                    window.location.href = 'visa-application.html';
+                }
+            });
+
+            document.getElementById('noButton').addEventListener('click', function() {
+                window.location.href = 'missing-documents.html';
+            });
+
+            document.getElementById('nextButton').addEventListener('click', function() {
+                window.location.href = 'declaration.html';
+            });
+
+            document.getElementById('backButton').addEventListener('click', function() {
+                window.location.href = 'job-description.html';
+            });
+        });
+    </script>
+</body>
+</html>

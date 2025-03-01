@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Referral Program</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Referral Program</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="personal-details.html">Personal Details</a></li>
+                    <li><a href="job-description.html">Job Description</a></li>
+                    <li><a href="requirements.html">Requirements</a></li>
+                    <li><a href="declaration.html">Declaration</a></li>
+                    <li><a href="visa-application.html">Visa Application</a></li>
+                    <li><a href="missing-documents.html">Missing Documents</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <section id="referral">
+                <h2>Invite Others to Join</h2>
+                <p>Generate your unique referral link and share it with others to invite them to join the job application platform.</p>
+                <div class="referral-container">
+                    <p>Your referral link:</p>
+                    <div class="referral-link-container">
+                        <span id="referralLink"></span>
+                        <button id="copyReferralLink">Copy</button>
+                    </div>
+                    <button id="generateLinkButton">Generate Referral Link</button>
+                </div>
+            </section>
+        </main>
+        <footer>
+            <p>&copy; 2025 Job Application Platform. All rights reserved.</p>
+        </footer>
+    </div>
+    <script>
+        document.getElementById('generateLinkButton').addEventListener('click', function() {
+            const userId = 'user123'; // Replace with actual user ID
+            const referralLink = `${window.location.origin}/job-application/index.html?ref=${userId}`;
+            document.getElementById('referralLink').textContent = referralLink;
+        });
+
+        document.getElementById('copyReferralLink').addEventListener('click', function() {
+            const referralLink = document.getElementById('referralLink').textContent;
+            navigator.clipboard.writeText(referralLink).then(() => {
+                alert('Referral link copied to clipboard!');
+            });
+        });
+    </script>
+</body>
+</html>
